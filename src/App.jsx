@@ -63,6 +63,33 @@ function App() {
     setStep(5);
   };
 
+  // Format expiry date as MM/YYYY
+  const handleExpiryChange = (e) => {
+    let value = e.target.value;
+    
+    // Remove any non-digit characters
+    value = value.replace(/\D/g, '');
+    
+    // Add slash after month
+    if (value.length > 2) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    
+    // Make sure month is between 01-12
+    if (value.length >= 2) {
+      const month = parseInt(value.slice(0, 2));
+      if (month > 12) {
+        value = '12' + value.slice(2);
+      } else if (month < 1 && value.length >= 2) {
+        value = '01' + value.slice(2);
+      } else if (value.slice(0, 1) === '0' && value.slice(1, 2) === '0') {
+        value = '01' + value.slice(2);
+      }
+    }
+    
+    setExpiry(value);
+  };
+
   return (
     <div style={{
       position: "fixed",
@@ -290,7 +317,7 @@ function App() {
               type="text"
               placeholder="Card Number"
               className="input-field"
-              maxLength={19}
+              maxLength={16}
               minLength={13}
               style={{
                 width: "100%",
@@ -325,14 +352,14 @@ function App() {
                 outline: "none"
               }}
               value={expiry}
-              onChange={(e) => setExpiry(e.target.value)}
+              onChange={handleExpiryChange}
               required
             />
             <input
               type="text"
               placeholder="CVV"
               className="input-field"
-              maxLength={4}
+              maxLength={3}
               minLength={3}
               style={{
                 width: "100%",
