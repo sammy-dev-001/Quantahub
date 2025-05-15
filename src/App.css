@@ -92,7 +92,7 @@ body {
 
 .login-input:focus + .login-label,
 .login-label--float {
-  top: -10px;
+  top: 0%;
   left: 10px;
   font-size: 13px;
   color: #ffe066;
@@ -232,13 +232,14 @@ body {
 
 @media (max-width: 600px) {
   .login-container {
-    width: 98vw;
+    width: 95vw;
     max-width: 98vw;
     min-width: unset;
     padding: 12px 2vw;
+    display: flex;
   }
   .login-logo {
-    width: 150px;
+    width: 250px;
     margin-bottom: 16px;
   }
   .login-actions {
@@ -247,11 +248,54 @@ body {
     gap: 12px;
   }
   .enroll-row {
-    margin-bottom: 12px;
-    text-align: center;
+    margin-bottom: 0px;
+    text-align: left;
     margin-right: 0;
+    top: 30px;
+    position: relative;
+    left: 2.5%;
   }
+  .login-button {
+    margin: 0;
+    width: 150px;
+    padding: 15px 0;
+    left: 60%;
+    position: relative;
+    bottom: 20px;
+  }
+  .login-input {
+    font-size: 14px;
+    height: 57px;
+    max-width: 95% ;
+    position: relative;
+    left: 2.5%;
+  }
+.forgot-link{
+  right: 2.5%;
+  position: relative;
 }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .contact-logos {
   display: flex;
