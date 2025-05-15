@@ -13,21 +13,33 @@ body {
   background: #232526;
   border-radius: 18px;
   box-shadow: 0 4px 32px rgba(0,0,0,0.4);
-  padding: 28px 24px 28px 24px;
-  width: 420px;
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
   height: auto;
   min-height: 420px;
-  max-width: 95vw;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.success-container {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .login-logo {
-  width: 180px;      /* Increase this value for a larger logo */
+  width: 220px;      /* Increase this value for a larger logo */
   max-width: 80vw;   /* Responsive on mobile */
   display: block;
   margin: 0 auto 24px auto;
@@ -149,7 +161,7 @@ body {
 .signin-actions {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 10px;
   gap: 12px;
@@ -178,41 +190,47 @@ body {
 }
 
 .signin-btn {
-  width: 120px;
+  width: 110px;
+  min-width: 90px;
   background: #23235b;
   color: #fff;
   border: none;
   border-radius: 7px;
-  padding: 12px 0;
-  font-size: 17px;
+  padding: 10px 0;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  margin: 0 0 0 16px;
+  margin: 0 0 0 12px;
   display: inline-block;
   transition: background 0.2s;
   vertical-align: middle;
   float: none;
+  box-shadow: none;
+  outline: none;
 }
 
 @media (max-width: 600px) {
   .login-container {
-    width: 95vw;
+    width: 98vw;
+    max-width: 98vw;
     min-width: unset;
-    padding: 16px 4vw;
+    padding: 12px 2vw;
   }
   .login-logo {
-    width: 120px;
+    width: 150px;
     margin-bottom: 16px;
   }
   .login-actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
   .enroll-row {
     margin-bottom: 12px;
     text-align: center;
+    margin-right: 0;
   }
-  .login-button {
+  .contact-btn {
     width: 100%;
     margin: 0;
   }
@@ -362,4 +380,13 @@ body {
   min-height: 38px;
   font-size: 15px;
   padding: 10px 12px;
+}
+
+.login-footer {
+  width: 100%;
+  text-align: center;
+  color: #bdbdbd;
+  font-size: 14px;
+  margin-top: 32px;
+  padding: 12px 0 0 0;
 }
