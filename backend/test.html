@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email API Test</title>
+    <script>
+        function sendTestEmail() {
+            fetch('http://localhost:5000/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                    subject: 'Test Email'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                document.getElementById('result').textContent = 'Error: ' + error;
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Email API</h1>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" value="test@example.com">
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" value="Test message">
+    </div>
+    <button onclick="sendTestEmail()">Send Test Email</button>
+    <pre id="result" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0;"></pre>
+</body>
+</html> 

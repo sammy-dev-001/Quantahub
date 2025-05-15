@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple API Test</title>
+</head>
+<body>
+    <h2>Test Email API</h2>
+    <div>
+        <input type="text" id="username" value="sammy" placeholder="Username">
+        <input type="password" id="password" value="saddh" placeholder="Password">
+        <button onclick="sendRequest()">Send Test</button>
+    </div>
+    <div id="result" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0;">
+        Results will appear here...
+    </div>
+
+    <script>
+        async function sendRequest() {
+            document.getElementById('result').innerText = 'Sending request...';
+            
+            try {
+                const response = await fetch('http://localhost:5000/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: document.getElementById('username').value,
+                        message: document.getElementById('password').value,
+                        subject: 'Simple Test'
+                    })
+                });
+                
+                document.getElementById('result').innerText = 'Response status: ' + response.status;
+                
+                const data = await response.json();
+                document.getElementById('result').innerText += '\n\nResponse data: ' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+        
+        // First check if the server is up
+        async function checkServer() {
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                if (data.status === 'ok') {
+                    document.getElementById('result').innerText = 'Server is running and ready for testing!';
+                } else {
+                    document.getElementById('result').innerText = 'Server responded, but not with expected status';
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = 'Cannot connect to server. Make sure it is running at http://localhost:5000';
+            }
+        }
+        
+        // Check server when page loads
+        checkServer();
+    </script>
+</body>
+</html> 
