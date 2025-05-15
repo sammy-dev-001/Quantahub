@@ -257,9 +257,9 @@ body {
   }
   .login-button {
     margin: 0;
-    width: 130px;
+    width: 120px;
     padding: 15px 0;
-    left: 62%;
+    left: 60%;
     position: relative;
     bottom: 20px;
   }
@@ -274,9 +274,57 @@ body {
   right: 2.5%;
   position: relative;
 }
-
-
+.username-label {
+  font-size: 14px;
+  left: 2%;
+position: relative;
+bottom: 8px;
 }
+  .username-value {
+    font-size: 16px;
+    position: relative;
+    bottom: 8px;
+  }
+  .switch-link {
+    font-size: 14px;
+    position: relative;
+    right: 5%;
+    bottom: 8px;
+  }
+  .signin-btn {
+    padding: 15px 0;
+    margin: 0;
+    left: 62.5%;
+    position: relative;
+    bottom: 20px;
+  }
+  .passkey-btn{
+    margin: 0;
+    left: 2.5%;
+    position: relative;
+    bottom: 20px;
+    top: 25px;
+  }
+}
+
+
+
+
+  .username-row {
+    margin-bottom: 0;
+    margin-top: 0;
+    left: 2.5%;
+    position: relative;
+  }
+  .signin-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+
+
+
 
 
 

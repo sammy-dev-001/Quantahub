@@ -232,14 +232,19 @@ function App() {
               <div className="signin-actions">
                 <button type="button" className="passkey-btn">
                   <span className="fingerprint-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffe066" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 11c1.657 0 3 1.343 3 3v2"/>
-                      <path d="M12 11c-1.657 0-3 1.343-3 3v2"/>
-                      <path d="M12 7v4"/>
-                      <path d="M17 11c0-2.761-2.239-5-5-5s-5 2.239-5 5"/>
-                      <path d="M19 17v-2c0-3.314-2.686-6-6-6s-6 2.686-6 6v2"/>
-                      <path d="M12 21v-2"/>
-                    </svg>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffe066" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <path d="M12 22c4.418 0 8-4.03 8-9s-3.582-9-8-9-8 4.03-8 9 3.582 9 8 9z"/>
+  
+
+  <path d="M12 19c3.314 0 6-3.134 6-7s-2.686-7-6-7-6 3.134-6 7 2.686 7 6 7z"/>
+  <path d="M12 16c2.209 0 4-2.239 4-5s-1.791-5-4-5-4 2.239-4 5 1.791 5 4 5z"/>
+  
+
+  <path d="M12 12v4"/>
+  <path d="M14 13c0-1.105-1.343-2-2-2s-2 0.895-2 2v1"/>
+</svg>
+
                   </span> Sign in with a passkey
                 </button>
                 <button type="submit" className="login-button signin-btn">Sign in</button>
