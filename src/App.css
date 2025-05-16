@@ -10,23 +10,27 @@ body {
 }
 
 .login-container {
+  flex-grow: 1; /* makes it take all available vertical space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: #232526;
   border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
   padding: 28px 24px;
   width: 100%;
   max-width: 420px;
   min-width: 0;
-  height: auto;
   min-height: 420px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+  margin-top: 25vh; 
 }
+
+/* Footer */
 
 .success-container {
   width: 100%;
@@ -239,16 +243,23 @@ body {
   flex-direction: column;
 }
 
+.main-content {
+  flex: 0 0 auto; /* Prevents stretching */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .login-footer {
+  width: 100%;
+  text-align: center;
   background: #000;
   color: #ffe066;
-  padding: 18px 0 12px 0;
-  text-align: center;
-  width: 100%;
-  margin-top: auto;
   font-size: 16px;
-  top: 215px;
-  position: relative;
+  padding: 18px 0 12px 0;
+  margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
+  position: static;      /* Remove any positioning */
 }
 
 @media (max-width: 600px) {
@@ -540,10 +551,12 @@ bottom: 8px;
 .login-footer {
   width: 100%;
   text-align: center;
-  color: #bdbdbd;
-  font-size: 14px;
-  margin-top: 32px;
-  padding: 12px 0 0 0;
+  background: #000;
+  color: #ffe066;
+  font-size: 16px;
+  padding: 18px 0 12px 0;
+  margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
+  position: static;      /* Remove any positioning */
 }
 
 /* Eye icon SVG */
