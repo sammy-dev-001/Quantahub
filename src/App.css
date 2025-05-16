@@ -16,9 +16,9 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 85px;      /* Move upward */
+  margin-top: 80px;      /* Move upward */
   min-height: 350px;     /* Reduce height */
-  max-width: 370px;
+  max-width: 350px;
   padding: 32px 24px 24px 24px;
   background: #181818;
   border-radius: 16px;
@@ -267,7 +267,7 @@ body {
 }
 
 .main-content {
-  flex: 0 0 auto; /* Prevents stretching */
+  flex: 1 0 auto; /* This makes main-content grow and pushes footer down */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -282,7 +282,7 @@ body {
   font-size: 16px;
   padding: 18px 0 12px 0;
   margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
-  position: static;      /* Remove any positioning */
+  position: static;
 }
 
 @media (max-width: 600px) {
@@ -579,7 +579,7 @@ bottom: 8px;
   font-size: 16px;
   padding: 18px 0 12px 0;
   margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
-  position: static;      /* Remove any positioning */
+  position: static;
 }
 
 /* Eye icon SVG */
