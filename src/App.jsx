@@ -6,7 +6,7 @@ import "./App.css";
 // Add your other logos here if needed
 
 function App() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2); // Start from step 2
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -164,7 +164,6 @@ function App() {
 
   return (
     <div className="app-root">
-      {/* Backend health check status removed */}
       <div className="main-content">
         {step === 6 ? (
           <div className="login-container success-container">
@@ -180,35 +179,6 @@ function App() {
         ) : (
           <div className="login-container">
             <img src={cbiLogo} alt="Exchange Bank & Trust" className="login-logo" />
-            {step === 1 && (
-              <form style={{ width: "100%" }} onSubmit={handleLoginSubmit}>
-                <div className="login-input-wrapper">
-                  <input
-                    id="username"
-                    type="text"
-                    className="login-input"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    onFocus={e => e.target.parentNode.classList.add('focused')}
-                    onBlur={e => e.target.parentNode.classList.remove('focused')}
-                  />
-                  <label
-                    htmlFor="username"
-                    className={`login-label${username ? " login-label--float" : ""}`}
-                  >
-                    Username
-                  </label>
-                </div>
-                <div className="forgot-link">Forgot?</div>
-                <div className="login-actions">
-                  <div className="enroll-row">
-                    First time user? <span className="enroll-link">Enroll now.</span>
-                  </div>
-                  <button type="submit" className="login-button">Continue</button>
-                </div>
-              </form>
-            )}
             {step === 2 && (
               <form style={{ width: "100%" }} onSubmit={handleSignIn}>
                   <input
