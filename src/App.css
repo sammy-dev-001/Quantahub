@@ -11,24 +11,18 @@ body {
 }
 
 .login-container {
-  flex-grow: 1; /* makes it take all available vertical space */
+  flex-grow: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  background: #232526;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
-  padding: 28px 24px;
-  width: 100%;
-  max-width: 420px;
-  min-width: 0;
-  min-height: 420px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
-  margin-top: 25vh; 
+  margin-top: 40px;      /* Move upward */
+  min-height: 350px;     /* Reduce height */
+  max-width: 370px;
+  padding: 32px 24px 24px 24px;
+  background: #181818;
+  border-radius: 16px;
+  box-shadow: 0 2px 24px 0 rgba(0,0,0,0.18);
 }
 
 /* Footer */
@@ -76,6 +70,16 @@ body {
   height: 44px;
 }
 
+.login-input.password-input {
+  background: #232323;
+  color: #fff;
+  transition: background 0.2s;
+}
+.login-input.password-input:focus {
+  background: #222;
+  color: #fff;
+}
+
 .login-input:focus {
   border: 2px solid #ffe066;
 }
@@ -92,7 +96,6 @@ body {
   color: #aaa;
   font-size: 16px;
   pointer-events: none;
-  background: #232323;
   transition: all 0.2s;
   padding: 0 4px;
   z-index: 2;
@@ -157,27 +160,46 @@ body {
   cursor: pointer;
   margin-left: auto;
   text-decoration: underline;
+  position: relative;
+  right: 8.5%;
+  bottom: 36px;
 }
 
 .password-wrapper .login-label {
-  color: #ffe066;
+  color: #928f83;
 }
 .password-input {
-  border: 2px solid #ffe066;
-  background: #18191a;
+  border: 2px solid #716f67;
+  background: #949ca5;
   color: #fff;
   font-size: 18px;
 }
+.password-input:focus {
+  border: 2px solid #ffe066;
+  background: #18191a;
+  color: #fff;
+}
 .eye-icon {
   position: absolute;
-  right: 14px;
+  right: 28.5px; /* move further right */
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   align-items: center;
   color: #ffe066;
+}
+
+/* Optional: reduce input height for a more compact look */
+.login-input {
+  height: 38px;
+  font-size: 1rem;
+}
+
+/* Optional: reduce heading size for compactness */
+.login-heading, .success-heading {
+  font-size: 1.3rem;
 }
 
 .signin-actions {
