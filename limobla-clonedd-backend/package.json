@@ -1,0 +1,20 @@
+{
+  "name": "limobla-clonedd-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Limobla cloned project, providing serverless functions for handling requests.",
+  "main": "api/send.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "nodemailer": "^6.4.11"
+  },
+  "devDependencies": {
+    "vercel": "^23.0.0"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "license": "MIT"
+}
