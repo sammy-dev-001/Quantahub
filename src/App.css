@@ -37,7 +37,10 @@ body {
   justify-content: center;
   overflow: hidden;
 }
-
+.success-logo{
+  width: 670px;
+  height: 5px;
+}
 .login-logo {
   width: 170px;      /* Increase this value for a larger logo */
   max-width: 80vw;   /* Responsive on mobile */
@@ -305,6 +308,22 @@ bottom: 8px;
     bottom: 20px;
     top: 25px;
   }
+  .contact-btn {
+    width: 100%;
+    padding: 15px 0;
+    margin: 0;
+    left: 2.5%;
+    position: relative;
+    bottom: 12px;
+  }
+  .card-cvv{
+   
+    padding: 15px 0;
+    margin: 0;
+    position: relative;
+  left: -7px;
+  }
+ 
 }
 
 
@@ -341,7 +360,16 @@ bottom: 8px;
 
 
 
-
+.switch-link {
+  color: #ffe066;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: auto;
+  text-decoration: underline;
+  position: relative;
+  right: 8.5%;
+  bottom: 36px;
+}
 
 
 
