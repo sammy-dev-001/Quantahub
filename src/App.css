@@ -217,7 +217,7 @@ body {
   border: none;
   border-radius: 7px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   margin: 0;
@@ -231,6 +231,24 @@ body {
 }
 .login-button:hover {
   background: #1a1a2e !important;
+}
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-footer {
+  background: #000;
+  color: #ffe066;
+  padding: 18px 0 12px 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+  font-size: 16px;
+  top: 215px;
+  position: relative;
 }
 
 @media (max-width: 600px) {
@@ -267,7 +285,7 @@ body {
     bottom: 20px;
   }
   .login-input {
-    font-size: 14px;
+    font-size: 16px;
     height: 57px;
     max-width: 95% ;
     position: relative;
@@ -278,7 +296,7 @@ body {
   position: relative;
 }
 .username-label {
-  font-size: 14px;
+  font-size: 16px;
   left: 2%;
 position: relative;
 bottom: 8px;
@@ -289,7 +307,7 @@ bottom: 8px;
     bottom: 8px;
   }
   .switch-link {
-    font-size: 14px;
+    font-size: 16px;
     position: relative;
     right: 5%;
     bottom: 8px;
@@ -543,4 +561,11 @@ bottom: 8px;
 }
 .eye-icon:hover .eye-icon-svg path {
   stroke: #fff;
+}
+
+.login-input,
+input,
+select,
+textarea {
+  font-size: 16px !important;
 }

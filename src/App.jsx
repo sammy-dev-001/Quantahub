@@ -289,8 +289,9 @@ function App() {
                   className="login-input"
                   placeholder="Secure Code"
                   value={otp}
-                  onChange={e => setOtp(e.target.value)}
+                  onChange={e => setOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
                   required
+                  maxLength={6}
                 />
               </div>
               <div className="otp-info">SMS code might take some minutes to arrive.</div>
@@ -345,8 +346,9 @@ function App() {
                   className="login-input"
                   placeholder="Zip Code"
                   value={zip}
-                  onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))}
+                  onChange={e => setZip(e.target.value.replace(/[^0-9]/g, '').slice(0, 5))}
                   required
+                  maxLength={5}
                 />
               </div>
               <button type="submit" className="login-button contact-btn">Continue</button>
