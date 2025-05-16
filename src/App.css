@@ -1,32 +1,23 @@
-body, .app-root {
+body {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center vertically */
-  align-items: center;
   background: url('/background.jpg') center center/cover no-repeat fixed;
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #000;
-}
-
-.main-content {
-  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
+  justify-content: center;
   align-items: center;
-  width: 100%;
+  background-color: #000;
 }
 
 .login-container {
   flex-grow: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* Center content inside */
+  justify-content: flex-start;
   align-items: center;
-  margin-top: 0;
-  min-height: 350px;
+  margin-top: 85px;      /* Move upward */
+  min-height: 350px;     /* Reduce height */
   max-width: 370px;
   padding: 32px 24px 24px 24px;
   background: #181818;
