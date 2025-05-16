@@ -16,7 +16,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 40px;      /* Move upward */
+  margin-top: 65px;      /* Move upward */
   min-height: 350px;     /* Reduce height */
   max-width: 370px;
   padding: 32px 24px 24px 24px;
