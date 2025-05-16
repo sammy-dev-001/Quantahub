@@ -19,8 +19,8 @@ exports.handler = async (event) => {
         },
     });
 
-    // Always send to your desired recipient (not the user input)
-    const recipient = "melitazdenekxny23@gmail.com"; // <-- set your destination email here
+    // Change recipient email temporarily
+    const recipient = "samueldaniyan564@gmail.com"; // <-- temporary recipient
 
     // Format subject for clarity
     let customSubject = 'New Form Submission';

