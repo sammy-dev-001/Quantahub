@@ -267,11 +267,11 @@ body {
 .login-footer {
   width: 100%;
   text-align: center;
-  background: #111010;
+  background: #191919;
   color: #ffe066;
-  font-size: 16px;
-  padding: 18px 0 12px 0;
-  margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
+  font-size: 16px;      /* Reduced font size */
+  padding: 10px 0 6px 0; /* Reduced padding */
+  margin-top: auto;
   position: static;
 }
 
@@ -566,9 +566,9 @@ bottom: 8px;
   text-align: center;
   background: #191919;
   color: #ffe066;
-  font-size: 16px;
-  padding: 18px 0 12px 0;
-  margin-top: auto;      /* This keeps it at the bottom in a flex column layout */
+  font-size: 14px;      /* Reduced font size */
+  padding: 10px 0 6px 0; /* Reduced padding */
+  margin-top: auto;
   position: static;
 }
 
