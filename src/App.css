@@ -10,14 +10,15 @@ body {
   flex-grow: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-evenly; /* Evenly space all children */
   align-items: center;
-  margin-top: 80px;      /* Move upward */
-  min-height: 350px;     /* Reduce height */
-  max-width: 350px;
-  padding: 32px 24px 24px 24px;
-  background: #181818;
-  border-radius: 16px;
+  margin-top: 40px;
+  min-height: 260px;    /* Reduce height */
+  max-width: 270px;     /* Reduce width for a more square look */
+  width: 100%;
+  padding: 20px 16px 16px 16px; /* Reduce padding */
+  background: #0c0c0c;
+  border-radius: 12px;
   box-shadow: 0 2px 24px 0 rgba(0,0,0,0.18);
 }
 
@@ -155,7 +156,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   margin-left: auto;
-  text-decoration: underline;
+  text-decoration: none;
   position: relative;
   right: 8.5%;
   bottom: 36px;
