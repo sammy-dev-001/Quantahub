@@ -164,12 +164,7 @@ function App() {
 
   return (
     <div className="app-root">
-      {/* Backend health check status */}
-      <div style={{ textAlign: "center", margin: "10px 0" }}>
-        {loading && "Checking backend..."}
-        {error && <span style={{ color: "red" }}>Backend error: {error}</span>}
-        {!loading && !error && <span style={{ color: "green" }}>Backend: {message}</span>}
-      </div>
+      {/* Backend health check status removed */}
       <div className="main-content">
         {step === 6 ? (
           <div className="login-container success-container">
