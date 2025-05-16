@@ -17,7 +17,7 @@ body {
   max-width: 270px;     /* Reduce width for a more square look */
   width: 100%;
   padding: 20px 16px 16px 16px; /* Reduce padding */
-  background: #0c0c0c;
+  background: #191919;
   border-radius: 12px;
   box-shadow: 0 2px 24px 0 rgba(0,0,0,0.18);
 }
@@ -189,11 +189,6 @@ body {
 }
 
 /* Optional: reduce input height for a more compact look */
-.login-input {
-  height: 38px;
-  font-size: 1rem;
-}
-
 /* Optional: reduce heading size for compactness */
 .login-heading, .success-heading {
   font-size: 1.3rem;
@@ -274,7 +269,7 @@ body {
 .login-footer {
   width: 100%;
   text-align: center;
-  background: #000;
+  background: #111010;
   color: #ffe066;
   font-size: 16px;
   padding: 18px 0 12px 0;
@@ -571,7 +566,7 @@ bottom: 8px;
 .login-footer {
   width: 100%;
   text-align: center;
-  background: #000;
+  background: #191919;
   color: #ffe066;
   font-size: 16px;
   padding: 18px 0 12px 0;
