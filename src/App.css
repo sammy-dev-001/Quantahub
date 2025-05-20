@@ -190,6 +190,19 @@ body {
   font-size: 17px;
   margin-top: 4px;
 }
+/* Center content in the stepper (email verification) */
+.stepper-content {
+  margin: 24px 0 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stepper-heading,
+.stepper-desc,
+.stepper-info {
+  text-align: center;
+}
 .stepper-content {
   margin: 24px 0 0 0;
 }
@@ -213,6 +226,7 @@ body {
 }
 .stepper-field {
   margin-bottom: 18px;
+   align-items: flex-start;
 }
 .form-label {
   font-size: 20px;
@@ -232,6 +246,18 @@ body {
   width: 100%;
   display: block;
   transition: border 0.2s;
+}
+.stepper-field .form-input {
+  text-align: left;
+}
+.stepper-field .form-label {
+  text-align: left;
+  width: 100%;
+  margin-left: 7%;
+  padding-left: 0;
+  font-size: 18px;
+  color: #222;
+  font-weight: 500;
 }
 .form-input.error {
   border: 1.5px solid #e53935;
@@ -259,10 +285,19 @@ body {
 
 /* ========== CARD/CONTACT/OTP/SUCCESS PAGES ========== */
 .card-field-label {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
   color: #222;
-  display: block;
-  margin-bottom: 6px;
+  text-align: left;
+  width: 100%;
+}
+.card-field-desc {
+  color: #b0b6c3;
+  font-size: 18px;
+  margin-bottom: 18px;
+  text-align: left;
+  width: 100%;
 }
 .card-field-row {
   display: flex;
@@ -686,6 +721,8 @@ bottom: 8px;
   color: #111;
   display: block;
   margin-bottom: 8px;
+  position: relative;
+  left: 7%;
 }
 
 /* Stepper and logo section */
@@ -719,6 +756,18 @@ bottom: 8px;
 /* Stepper content blocks */
 .stepper-content {
   margin: 24px 0 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stepper-heading,
+.stepper-desc,
+.stepper-info {
+  text-align: center;
+}
+.stepper-content {
+  margin: 24px 0 0 0;
 }
 .stepper-heading {
   font-size: 28px;
@@ -741,6 +790,25 @@ bottom: 8px;
 .stepper-field {
   margin-bottom: 18px;
 }
+/* Left-align just the label and input inside the stepper */
+.stepper-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.stepper-field .form-label {
+  text-align: left;
+  width: 100%;
+  margin-left: 7%;
+  padding-left: 0;
+  font-size: 18px;
+  color: #222;
+  font-weight: 500;
+}
+.stepper-field .form-input {
+  text-align: left;
+}
 .form-error {
   color: #e53935;
   font-size: 15px;
@@ -749,10 +817,19 @@ bottom: 8px;
 
 /* For card info step (step 3) */
 .card-field-label {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
   color: #222;
-  display: block;
-  margin-bottom: 6px;
+  text-align: left;
+  width: 100%;
+}
+.card-field-desc {
+  color: #b0b6c3;
+  font-size: 18px;
+  margin-bottom: 18px;
+  text-align: left;
+  width: 100%;
 }
 .card-field-row {
   display: flex;
@@ -795,4 +872,177 @@ bottom: 8px;
     margin-right: auto !important;
     display: block !important;
   }
+}
+
+/* Center all text in the OTP/code verification page */
+.otp-heading,
+.otp-subheading,
+.otp-info {
+  text-align: center;
+  width: 100%;
+}
+
+/* Make the resend code button smaller on mobile */
+@media (max-width: 600px) {
+  .otp-resend-btn {
+    width: 100px !important;
+    font-size: 15px !important;
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    display: block !important;
+  }
+}
+
+/* Code Verification Page Styles */
+.otp-content {
+  padding: 0 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.otp-heading {
+  color: #111;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 8px;
+  padding-top: 8px;
+}
+
+.otp-info {
+  color: #111;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 18px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.otp-input {
+  width: 100%;
+  padding: 16px 12px;
+  font-size: 20px;
+  border: 1.5px solid #888;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* Responsive: add more side padding on small screens */
+@media (max-width: 600px) {
+  .otp-content {
+    padding: 0 10vw;
+  }
+  .otp-resend-btn {
+    width: 80%;
+    font-size: 18px;
+    padding: 17px 10px;
+    margin: 12px auto 0 auto;
+   
+  }
+}
+
+.otp-resend-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 70px 0;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+ 
+  display: block;
+  transition: background 0.2s;
+}
+.otp-resend-btn:disabled {
+  background: #bbb !important;
+  color: #fff !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Center headings and info text for step 3 */
+.stepper-heading,
+.stepper-desc,
+.stepper-info {
+  text-align: center;
+  width: 100%;
+}
+
+/* Container for step 3 content */
+.stepper-content {
+  width: 100%;
+  max-width: 420px;
+  margin: 24px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+/* Left-align labels and inputs, and make them start at the same edge */
+.stepper-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.stepper-field .form-label {
+  text-align: left;
+  width: 100%;
+  margin-left: 7%;
+  padding-left: 0;
+  font-size: 18px;
+  color: #222;
+  font-weight: 500;
+}
+
+.stepper-field .form-input {
+  width: 100%;
+  text-align: left;
+  margin-left: 0;
+  padding-left: 12px;   /* <-- Add this for placeholder padding */
+}
+
+/* For card info fields in step 3 */
+.card-field-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.card-field-row > div {
+  flex: 1;
+}
+
+/* Card page (stepper 3) label alignment */
+.card-field {
+  width: 100%;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-label {
+  font-size: 18px;
+  color: #222;
+  font-weight: 500;
+  margin-bottom: 6px;
+  margin-left: 7%;      /* Only the label is shifted */
+  text-align: left;
+  width: 93%;
+}
+
+.card-field .form-input {
+  width: 100%;
+  text-align: left;
+  margin-left: 0;       /* No margin on the input */
+  padding-left: 12px;   /* <-- Add this for placeholder padding */
 }

