@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 // Placeholder image imports (replace with your actual assets later)
-const bangorLogo = ""; // e.g. require("./assets/bangor-logo.png")
+const bangorLogo = "./assets/bangor-logo.png"; // e.g. require("./assets/bangor-logo.png")
 
 function Stepper({ step }) {
   return (
@@ -210,50 +210,39 @@ function StepPage({ step, onNext, onPrev }) {
     content = (
       <>
         {/* Logo and tagline */}
-        <div style={{ textAlign: "center", marginBottom: 12 }}>
+        <div className="stepper-logo-wrap">
           {bangorLogo && (
-            <img src={bangorLogo} alt="Bangor Savings Bank" style={{ height: 48, marginBottom: 8 }} />
+            <img src={bangorLogo} alt="Bangor Savings Bank" className="stepper-logo" />
           )}
-          <div style={{ fontWeight: "bold", fontSize: 38, color: "#0056b8", letterSpacing: "-1px" }}>Bangor</div>
-          <div style={{ fontWeight: "bold", fontSize: 26, color: "#888", marginTop: -8 }}>Savings Bank</div>
-          <div style={{ color: "#0056b8", fontWeight: 600, fontSize: 17, marginTop: 4 }}>You matter more.</div>
+          <div className="stepper-title">Bangor</div>
+          <div className="stepper-subtitle">Savings Bank</div>
+          <div className="stepper-tagline">You matter more.</div>
         </div>
-        {/* Stepper */}
         <Stepper step={1} />
-        <div style={{ margin: "24px 0 0 0" }}>
-          <div style={{ fontSize: 28, fontWeight: 500, marginBottom: 8, color: "#111" }}>Email Verification!</div>
-          <div style={{ fontSize: 24, fontWeight: 400, marginBottom: 18, color: "#111", lineHeight: 1.2 }}>
+        <div className="stepper-content">
+          <div className="stepper-heading">Email Verification!</div>
+          <div className="stepper-desc">
             Confirm Your Email and Phone<br />Number Information
           </div>
-          <div style={{ fontSize: 20, color: "#222", marginBottom: 28 }}>
+          <div className="stepper-info">
             Please confirm your contact details on file.
           </div>
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 20, color: "#111", display: "block", marginBottom: 8 }}>Email Address</label>
+          <div className="stepper-field">
+            <label className="form-label">Email Address</label>
             <input
               type="email"
               placeholder=""
               value={email}
               onChange={e => setEmail(e.target.value)}
               onBlur={() => setTouched(t => ({ ...t, email: true }))}
-              style={{
-                padding: "16px 12px",
-                width: "100%",
-                fontSize: 20,
-                border: emailValid || !touched.email ? "1.5px solid #888" : "1.5px solid #e53935",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 8,
-                boxSizing: "border-box"
-              }}
+              className={`form-input${!emailValid && touched.email ? " error" : ""}`}
             />
             {!emailValid && touched.email && (
-              <div style={{ color: "#e53935", fontSize: 15, marginTop: 2 }}>Enter a valid email address</div>
+              <div className="form-error">Enter a valid email address</div>
             )}
           </div>
-          <div style={{ marginBottom: 32 }}>
-            <label style={{ fontSize: 20, color: "#111", display: "block", marginBottom: 8 }}>Phone Number</label>
+          <div className="stepper-field">
+            <label className="form-label">Phone Number</label>
             <input
               type="tel"
               placeholder="XXX-XXX-XXXX"
@@ -263,39 +252,16 @@ function StepPage({ step, onNext, onPrev }) {
                 setPhone(formatted);
               }}
               onBlur={() => setTouched(t => ({ ...t, phone: true }))}
-              style={{
-                padding: "16px 12px",
-                width: "100%",
-                fontSize: 20,
-                border: phoneValid || !touched.phone ? "1.5px solid #888" : "1.5px solid #e53935",
-                borderRadius: 8,
-                background: "#fff",
-                color: "#222",
-                marginBottom: 8,
-                boxSizing: "border-box"
-              }}
+              className={`form-input${!phoneValid && touched.phone ? " error" : ""}`}
             />
             {!phoneValid && touched.phone && (
-              <div style={{ color: "#e53935", fontSize: 15, marginTop: 2 }}>Format: 123-456-7890</div>
+              <div className="form-error">Format: 123-456-7890</div>
             )}
           </div>
           <button
             onClick={onNext}
             disabled={!(emailValid && phoneValid)}
-            style={{
-              width: "100%",
-              background: emailValid && phoneValid ? "#222" : "#bbb",
-              color: "#fff",
-              fontSize: 26,
-              border: "none",
-              borderRadius: 12,
-              padding: "14px 0",
-              fontWeight: 400,
-              margin: "0 auto",
-              display: "block",
-              cursor: emailValid && phoneValid ? "pointer" : "not-allowed",
-              opacity: emailValid && phoneValid ? 1 : 0.7
-            }}
+            className="form-btn"
           >
             Continue
           </button>
