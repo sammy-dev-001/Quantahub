@@ -105,7 +105,7 @@ body {
   border: 1.5px solid #888;
   border-radius: 4px;
   background: #232323;
-  color: #fff;
+  color: #000000;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s;
@@ -330,13 +330,12 @@ body {
     width: 250px;
     margin-bottom: 16px;
   }
-  .login-input,
   .form-input,
   .form-btn,
   .card-container input,
   .card-container button {
-    width: 85vw !important;
-    max-width: 95vw !important;
+    width: 80vw !important;
+    max-width: 90vw !important;
     margin-left: auto !important;
     margin-right: auto !important;
     display: block !important;
@@ -363,8 +362,8 @@ body {
     bottom: 20px;
   }
   .login-input {
-    width: 90vw !important;   /* Nearly full width on mobile */
-    max-width: 98vw !important;
+    width: 80vw !important;   /* Nearly full width on mobile */
+    max-width: 80vw !important;
     left: 0 !important;
     position: static !important;
   }

