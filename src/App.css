@@ -1,9 +1,9 @@
 body {
   min-height: 100vh;
-  background: url('/background.jpg') center center/cover no-repeat fixed;
+  /* background: url('/background.jpg') center center/cover no-repeat fixed; */ /* Remove or comment out this line */
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #000;
+  background-color: #000; /* Keep your solid background color */
 }
 
 .login-container {
@@ -52,7 +52,7 @@ body {
 }
 
 .login-input {
-  width: 100%;
+  /* width: 100%; */  /* <-- Comment out or remove this line */
   padding: 14px 12px 6px 12px;
   font-size: 16px;
   border: 1.5px solid #888;
@@ -63,6 +63,7 @@ body {
   box-sizing: border-box;
   transition: border-color 0.2s;
   height: 44px;
+  max-width: 90%;
 }
 
 .login-input.password-input {
@@ -204,7 +205,7 @@ body {
 .passkey-btn {
   background: none;
   border: none;
-  color: #ffe066;
+  color: #ffe;
   font-size: 15px;
   display: flex;
   align-items: center;
@@ -273,6 +274,29 @@ body {
   padding: 10px 0 6px 0; /* Reduced padding */
   margin-top: auto;
   position: static;
+}
+
+.card-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);
+  max-width: 420px;
+  width: 100%;
+  margin: 48px auto;
+  padding: 36px 24px 32px 24px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100vw;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -382,25 +406,6 @@ bottom: 8px;
     align-items: stretch;
     gap: 12px;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .switch-link {
   color: #ffe066;
@@ -585,13 +590,47 @@ bottom: 8px;
 .eye-icon-svg path {
   transition: stroke 0.2s;
 }
-.eye-icon:hover .eye-icon-svg path {
-  stroke: #fff;
+.eye-icon {
+  display: none;
 }
 
-.login-input,
-input,
-select,
-textarea {
-  font-size: 16px !important;
+.card-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);
+  max-width: 420px;
+  width: 100%;
+  margin: 48px auto;
+  padding: 36px 24px 32px 24px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100vw;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Remove underline from links in login page */
+.login-links a {
+  text-decoration: none;
+}
+
+/* Responsive input and button width for mobile */
+@media (max-width: 600px) {
+  .card-container input,
+  .card-container button {
+    width: 85% !important;
+    min-width: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    max-width: 95vw !important;
+  }
 }
